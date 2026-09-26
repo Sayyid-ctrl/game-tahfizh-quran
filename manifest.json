@@ -1,0 +1,22 @@
+{
+  "name": "Game Edukasi Tahfizh Al-Qur'an",
+  "short_name": "Game Tahfizh",
+  "description": "Aplikasi Game Edukasi Tahfizh Al-Qur'an 30 Juz Lengkap (114 Surah)",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F4F7F5",
+  "theme_color": "#0F5257",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2903/2903527.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2903/2903527.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
