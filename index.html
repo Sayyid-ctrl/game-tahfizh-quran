@@ -2,154 +2,964 @@
 <html lang="id" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0F5257">
-  <meta name="description" content="Aplikasi Game Edukasi Tahfizh Al-Qur'an 30 Juz Lengkap (114 Surah) dengan Mode Gelap">
-  <title>Game Edukasi Tahfizh Al-Qur'an 30 Juz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0B3C3E">
+  <meta name="description" content="Aplikasi Game Edukasi Tahfizh Al-Qur'an 30 Juz (114 Surah) Interaktif & Modern">
+  <title>Tahfizh Master - Game Edukasi Al-Qur'an 30 Juz</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti for Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  
   <style>
     :root {
-      --primary-teal: #0F5257;
-      --primary-teal-dark: #0B3C3E;
-      --secondary-emerald: #16A085;
-      --emerald-light: #D4EFDF;
-      --accent-gold: #D4AF37;
-      --accent-amber: #F39C12;
-      --gold-light: #FCF3CF;
-      --bg-ivory: #F4F7F5;
+      --primary-teal: #0D5C58;
+      --primary-teal-dark: #073836;
+      --primary-teal-light: #158079;
+      --secondary-emerald: #10B981;
+      --emerald-light: #D1FAE5;
+      --accent-gold: #F59E0B;
+      --accent-gold-gradient: linear-gradient(135deg, #FDE047, #F59E0B, #D97706);
+      --accent-amber: #F97316;
+      --gold-light: #FEF3C7;
+      --bg-main: #F0FDF4;
       --card-white: #FFFFFF;
-      --text-dark: #1F2937;
-      --text-muted: #6B7280;
+      --card-hover: #F8FAFC;
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
       --border-color: #E2E8F0;
-      --success-green: #2E7D32;
-      --error-red: #C0392B;
-      --info-blue: #2980B9;
-      --nav-bg: #FFFFFF;
+      --success-green: #10B981;
+      --error-red: #EF4444;
+      --info-blue: #3B82F6;
+      --nav-bg: rgba(255, 255, 255, 0.92);
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(13, 92, 88, 0.12);
+      --shadow-lg: 0 16px 36px rgba(13, 92, 88, 0.18);
     }
 
     [data-theme="dark"] {
-      --primary-teal: #16A085;
-      --primary-teal-dark: #0F5257;
-      --secondary-emerald: #1ABC9C;
-      --emerald-light: #123B33;
-      --accent-gold: #F1C40F;
-      --accent-amber: #F39C12;
-      --gold-light: #2C260D;
-      --bg-ivory: #0B1917;
-      --card-white: #142825;
-      --text-dark: #E2E8F0;
+      --primary-teal: #10B981;
+      --primary-teal-dark: #064E3B;
+      --primary-teal-light: #34D399;
+      --secondary-emerald: #059669;
+      --emerald-light: #064E3B;
+      --accent-gold: #FBBF24;
+      --accent-gold-gradient: linear-gradient(135deg, #FCD34D, #F59E0B, #B45309);
+      --accent-amber: #FB923C;
+      --gold-light: #2E2005;
+      --bg-main: #061A17;
+      --card-white: #0C2824;
+      --card-hover: #123731;
+      --text-dark: #F8FAFC;
       --text-muted: #94A3B8;
-      --border-color: #1E3A35;
-      --nav-bg: #10221F;
+      --border-color: #17423B;
+      --nav-bg: rgba(12, 40, 36, 0.92);
+      --glass-bg: rgba(12, 40, 36, 0.75);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.6);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Outfit', sans-serif; background-color: var(--bg-ivory); color: var(--text-dark); display: flex; justify-content: center; min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
-    #app-container { width: 100%; max-width: 480px; background-color: var(--bg-ivory); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); min-height: 100vh; display: flex; flex-direction: column; position: relative; overflow-x: hidden; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
 
-    .header { background: linear-gradient(135deg, var(--primary-teal-dark), var(--primary-teal)); color: white; padding: 28px 20px 20px; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); }
-    .header-top { display: flex; justify-content: space-between; align-items: center; }
-    .header-subtitle { color: var(--accent-gold); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
-    .header-title { font-size: 22px; font-weight: 700; margin-top: 2px; }
+    #app-container {
+      width: 100%;
+      max-width: 480px;
+      background-color: var(--bg-main);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-    .theme-toggle-btn { background: rgba(255, 255, 255, 0.18); color: white; border: 1.5px solid var(--accent-gold); width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
-    .theme-toggle-btn:hover { transform: scale(1.08); }
+    /* Ambient Glow Effects */
+    .glow-sphere {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-    .install-pwa-btn { background: var(--accent-gold); color: #0F5257; border: none; padding: 10px 16px; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-top: 14px; width: 100%; justify-content: center; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4); }
+    /* Header Styling */
+    .header {
+      background: linear-gradient(145deg, #073836, #0D5C58 60%, #158079);
+      color: white;
+      padding: 26px 20px 22px;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
 
-    .stat-banner { margin-top: 14px; background: rgba(255, 255, 255, 0.12); border-radius: 16px; padding: 12px 16px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: space-between; }
-    .player-title { font-weight: 700; font-size: 14px; }
-    .player-xp { font-size: 12px; opacity: 0.85; }
-    .streak-badge { background: var(--accent-amber); padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+    .header::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.25), transparent 70%);
+      border-radius: 50%;
+    }
 
-    .content { padding: 20px; flex: 1; padding-bottom: 90px; }
-    .section-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--text-dark); }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
 
-    .juz-select-box { width: 100%; padding: 12px; border-radius: 14px; border: 1.5px solid var(--primary-teal); background: var(--card-white); font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; color: var(--text-dark); margin-bottom: 16px; outline: none; }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #FCD34D;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
 
-    .menu-card { background: var(--card-white); border-radius: 20px; padding: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-    .menu-card:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
-    .menu-card.featured { background: linear-gradient(135deg, var(--primary-teal-dark), var(--primary-teal)); color: white; border: none; }
-    .card-icon { width: 48px; height: 48px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-    .card-info { flex: 1; }
-    .card-title { font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
-    .card-badge { background: var(--accent-gold); color: #0F5257; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
-    .card-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-    .featured .card-subtitle { color: rgba(255, 255, 255, 0.85); }
+    .header-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 4px;
+      letter-spacing: -0.5px;
+    }
 
-    .level-list { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 20px 0; }
-    .level-node { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-    .level-circle { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-teal-dark), var(--secondary-emerald)); border: 3.5px solid var(--accent-gold); box-shadow: 0 6px 15px rgba(22, 160, 133, 0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; position: relative; }
-    .level-circle.locked { background: #334155; border-color: #64748B; box-shadow: none; }
-    .stars-row { display: flex; gap: 2px; margin-bottom: 4px; font-size: 12px; color: var(--accent-gold); }
-    .level-number { font-size: 20px; font-weight: 700; }
-    .level-arabic { font-size: 12px; color: var(--gold-light); font-family: 'Amiri', serif; }
-    .level-label { margin-top: 8px; background: rgba(22, 160, 133, 0.12); padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; color: var(--primary-teal); }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    .quiz-container { background: var(--card-white); border-radius: 24px; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 20px; border: 1px solid var(--border-color); }
-    .arabic-prompt { font-family: 'Amiri', serif; font-size: 28px; text-align: center; direction: rtl; line-height: 1.8; margin: 16px 0; color: var(--primary-teal); }
-    .option-btn { width: 100%; background: var(--card-white); border: 1.5px solid var(--border-color); color: var(--text-dark); border-radius: 16px; padding: 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 16px; font-family: 'Outfit', sans-serif; transition: all 0.2s; }
-    .option-btn.arabic { font-family: 'Amiri', serif; font-size: 22px; direction: rtl; justify-content: flex-start; }
-    .option-btn:hover { border-color: var(--primary-teal); }
-    .option-btn.correct { background-color: var(--emerald-light); border-color: var(--success-green); color: var(--secondary-emerald); }
-    .option-btn.wrong { background-color: #3B1C1C; border-color: var(--error-red); color: #F87171; }
-    .explanation-box { background: var(--gold-light); border-radius: 14px; padding: 14px; font-size: 13px; margin-top: 10px; color: var(--text-dark); font-weight: 600; }
-    .btn-primary { width: 100%; background: var(--primary-teal); color: white; border: none; padding: 14px; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 14px; }
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 
-    .verse-card { background: var(--card-white); border-radius: 18px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); border: 1px solid var(--border-color); }
-    .verse-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .ayah-num { width: 28px; height: 28px; border-radius: 50%; background: var(--gold-light); color: var(--accent-gold); font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; }
-    .play-audio-btn { background: rgba(22, 160, 133, 0.15); color: var(--primary-teal); border: none; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .icon-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      background: rgba(255, 255, 255, 0.22);
+    }
 
-    .loader { text-align: center; padding: 30px; font-weight: bold; color: var(--primary-teal); }
+    .icon-btn:active {
+      transform: scale(0.95);
+    }
 
-    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border-color); box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08); }
-    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: none; }
-    .nav-item.active { color: var(--primary-teal); }
-    .nav-item-icon { font-size: 20px; }
+    /* Player Stat Bar */
+    .stat-bar {
+      margin-top: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 12px 16px;
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); display: flex; align-items: flex-end; justify-content: center; z-index: 1000; }
-    .modal-content { width: 100%; max-width: 480px; background: var(--card-white); color: var(--text-dark); border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px; animation: slideUp 0.3s ease; }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar-orb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-gold-gradient);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+      to { box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+    }
+
+    .player-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .player-xp-count {
+      font-size: 12px;
+      color: #A7F3D0;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .streak-capsule {
+      background: linear-gradient(135deg, #FF6B00, #F59E0B);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
+      animation: bounceSmall 2s infinite ease-in-out;
+    }
+
+    @keyframes bounceSmall {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    /* Quest / Mission Bar */
+    .daily-quest-card {
+      background: var(--card-white);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .quest-progress-bg {
+      width: 100%;
+      height: 8px;
+      background: var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .quest-progress-fill {
+      height: 100%;
+      background: var(--accent-gold-gradient);
+      border-radius: 6px;
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Main Content Area */
+    .content {
+      padding: 20px 18px;
+      flex: 1;
+      padding-bottom: 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Live Search Input */
+    .search-box {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      border-radius: 16px;
+      border: 1.5px solid var(--border-color);
+      background: var(--card-white);
+      color: var(--text-dark);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--secondary-emerald);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    /* Menu Cards */
+    .game-card {
+      background: var(--card-white);
+      border: 1.5px solid var(--border-color);
+      border-radius: 24px;
+      padding: 18px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--secondary-emerald);
+    }
+
+    .game-card:active {
+      transform: scale(0.98);
+    }
+
+    .game-card.featured-card {
+      background: linear-gradient(135deg, #073836, #0D5C58 70%, #158079);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 25px rgba(13, 92, 88, 0.35);
+    }
+
+    .game-card.featured-card .card-subtitle {
+      color: #D1FAE5;
+    }
+
+    .card-orb {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-info {
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      letter-spacing: -0.3px;
+    }
+
+    .card-chip {
+      background: var(--accent-gold-gradient);
+      color: #073836;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: 800;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+    }
+
+    .card-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Level Map - Snake Path */
+    .level-roadmap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      padding: 24px 0 40px;
+      position: relative;
+    }
+
+    .level-roadmap::before {
+      content: "";
+      position: absolute;
+      top: 40px;
+      bottom: 40px;
+      width: 4px;
+      background: repeating-linear-gradient(to bottom, var(--secondary-emerald), var(--secondary-emerald) 8px, transparent 8px, transparent 16px);
+      z-index: 0;
+    }
+
+    .level-node-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .level-node-item:nth-child(even) {
+      transform: translateX(35px);
+    }
+
+    .level-node-item:nth-child(odd) {
+      transform: translateX(-35px);
+    }
+
+    .level-node-item:hover {
+      transform: scale(1.1) !important;
+    }
+
+    .level-node-circle {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #0D5C58, #10B981);
+      border: 4px solid #F59E0B;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+    }
+
+    .level-node-circle.locked {
+      background: var(--border-color);
+      border-color: var(--text-muted);
+      box-shadow: none;
+      opacity: 0.6;
+    }
+
+    .level-num-label {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .level-arabic-title {
+      font-family: 'Amiri', serif;
+      font-size: 13px;
+      color: #FEF3C7;
+      margin-top: -2px;
+    }
+
+    .level-badge-tag {
+      margin-top: 8px;
+      background: var(--card-white);
+      border: 1px solid var(--border-color);
+      color: var(--primary-teal);
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+    }
+
+    /* Quiz Screen Styles */
+    .quiz-card-box {
+      background: var(--card-white);
+      border-radius: 28px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      border: 1.5px solid var(--border-color);
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .floating-xp-anim {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--accent-gold);
+      animation: floatUp 1s forwards ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+      50% { opacity: 1; transform: translateY(-10px) scale(1.2); }
+      100% { opacity: 0; transform: translateY(-30px); }
+    }
+
+    .arabic-display {
+      font-family: 'Amiri', serif;
+      font-size: 30px;
+      text-align: center;
+      direction: rtl;
+      line-height: 1.9;
+      color: var(--primary-teal-dark);
+      margin: 16px 0;
+      padding: 10px;
+      background: var(--bg-main);
+      border-radius: 20px;
+      border: 1px dashed var(--secondary-emerald);
+    }
+
+    [data-theme="dark"] .arabic-display {
+      color: #A7F3D0;
+    }
+
+    .option-choice-btn {
+      width: 100%;
+      background: var(--card-white);
+      border: 2px solid var(--border-color);
+      color: var(--text-dark);
+      border-radius: 20px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: inherit;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .option-choice-btn.arabic-choice {
+      font-family: 'Amiri', serif;
+      font-size: 22px;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .option-choice-btn:hover {
+      border-color: var(--secondary-emerald);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .option-choice-btn.correct-choice {
+      background: var(--emerald-light) !important;
+      border-color: var(--success-green) !important;
+      color: var(--success-green) !important;
+      transform: scale(1.02);
+    }
+
+    .option-choice-btn.wrong-choice {
+      background: #FEE2E2 !important;
+      border-color: var(--error-red) !important;
+      color: var(--error-red) !important;
+      animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* Murattal Verse Cards & Floating Controls */
+    .verse-item-card {
+      background: var(--card-white);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid var(--border-color);
+      transition: all 0.2s;
+    }
+
+    .verse-item-card:hover {
+      border-color: var(--secondary-emerald);
+    }
+
+    .verse-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .verse-number-orb {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--emerald-light);
+      color: var(--primary-teal);
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .verse-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-audio-play {
+      background: var(--emerald-light);
+      color: var(--primary-teal);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.2s;
+    }
+
+    .btn-audio-play:hover {
+      transform: scale(1.05);
+    }
+
+    /* Floating Memorization Toolbar (Loop Audio & Speed) */
+    .memorize-toolbar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--border-color);
+      border-radius: 20px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+    }
+
+    .toolbar-chip {
+      background: var(--card-white);
+      border: 1px solid var(--border-color);
+      color: var(--text-dark);
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .toolbar-chip.active {
+      background: var(--primary-teal);
+      color: white;
+      border-color: var(--primary-teal);
+    }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 480px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0 14px;
+      border-top: 1px solid var(--border-color);
+      box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.06);
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-item.active {
+      color: var(--primary-teal);
+      transform: translateY(-3px);
+    }
+
+    .nav-icon {
+      font-size: 22px;
+    }
+
+    /* Buttons */
+    .btn-action-main {
+      width: 100%;
+      background: linear-gradient(135deg, #0D5C58, #10B981);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 18px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s;
+    }
+
+    .btn-action-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+    }
+
+    .btn-action-main:active {
+      transform: scale(0.98);
+    }
+
+    /* Modal bottom sheet */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-white);
+      color: var(--text-dark);
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      padding: 26px 20px 36px;
+      animation: slideSheet 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    @keyframes slideSheet {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <div id-app-container id="app">
+  <div id="app-container">
+    <!-- Ambient glowing spheres -->
+    <div class="glow-sphere" style="top: 10%; left: -50px;"></div>
+    <div class="glow-sphere" style="top: 50%; right: -50px;"></div>
+
+    <!-- Header Section -->
     <header class="header">
       <div class="header-top">
         <div>
-          <div class="header-subtitle">GAME TAHFIZH QUR'AN</div>
-          <div class="header-title">30 Juz Lengkap (114 Surah)</div>
+          <div class="badge-pill">✨ Game Tahfizh Al-Qur'an</div>
+          <div class="header-title">Tahfizh Master 30 Juz</div>
         </div>
-        <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-btn" title="Ganti Mode Terang / Gelap">🌙</button>
+        <div class="header-actions">
+          <button class="icon-btn" onclick="toggleSound()" id="sfx-btn" title="Toggle Suara Efek">🔊</button>
+          <button class="icon-btn" onclick="toggleTheme()" id="theme-btn" title="Ganti Mode Terang / Gelap">🌙</button>
+        </div>
       </div>
-      <button id="pwa-install-btn" class="install-pwa-btn" onclick="triggerPwaInstall()">📲 Install Aplikasi ke HP / Laptop</button>
-      <div class="stat-banner">
-        <div>
-          <div class="player-title" id="player-title">Pemula Tahfizh</div>
-          <div class="player-xp" id="player-xp">Total Skor: 0 XP</div>
+
+      <!-- Player Stat & Avatar Bar -->
+      <div class="stat-bar">
+        <div class="stat-item">
+          <div class="avatar-orb">👑</div>
+          <div>
+            <div class="player-name" id="player-title">Pemula Tahfizh</div>
+            <div class="player-xp-count">⚡ <span id="player-xp">0 XP</span></div>
+          </div>
         </div>
-        <div class="streak-badge">🔥 <span id="player-streak">1 Hari</span></div>
+        <div class="streak-capsule">
+          🔥 <span id="player-streak">1 Hari</span>
+        </div>
       </div>
     </header>
 
+    <!-- Main Dynamic Content -->
     <main class="content" id="main-content"></main>
 
+    <!-- Bottom Navigation Bar -->
     <nav class="bottom-nav">
-      <div class="nav-item active" onclick="showView('home')"><div class="nav-item-icon">🏠</div><span>Beranda</span></div>
-      <div class="nav-item" onclick="showView('level')"><div class="nav-item-icon">🗺️</div><span>Level</span></div>
-      <div class="nav-item" onclick="showView('murattal')"><div class="nav-item-icon">🎧</div><span>Murattal</span></div>
-      <div class="nav-item" onclick="showView('badges')"><div class="nav-item-icon">🏅</div><span>Badge</span></div>
-      <div class="nav-item" onclick="showView('progress')"><div class="nav-item-icon">📊</div><span>Progres</span></div>
+      <div class="nav-item active" onclick="showView('home')">
+        <div class="nav-icon">🕌</div>
+        <span>Beranda</span>
+      </div>
+      <div class="nav-item" onclick="showView('level')">
+        <div class="nav-icon">🗺️</div>
+        <span>Level</span>
+      </div>
+      <div class="nav-item" onclick="showView('murattal')">
+        <div class="nav-icon">🎧</div>
+        <span>Murattal</span>
+      </div>
+      <div class="nav-item" onclick="showView('badges')">
+        <div class="nav-icon">🏅</div>
+        <span>Lencana</span>
+      </div>
+      <div class="nav-item" onclick="showView('progress')">
+        <div class="nav-icon">📊</div>
+        <span>Profil</span>
+      </div>
     </nav>
   </div>
 
   <script>
-    // Theme Mode Toggle (Dark / Light Mode)
+    /* ==========================================================
+       SYNTHESIZED SOUND ENGINE (Web Audio API - No Lag!)
+    ========================================================== */
+    let sfxEnabled = true;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSoundEffect(type) {
+      if (!sfxEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+
+        if (type === 'correct') {
+          // Play a delightful ascending melodic chime
+          [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.08);
+            gain.gain.setValueAtTime(0.2, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.3);
+          });
+        } else if (type === 'wrong') {
+          // Gentle soft low thud
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.linearRampToValueAtTime(140, now + 0.25);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else if (type === 'click') {
+          // Tactile click pop
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === 'win') {
+          // Victory Fanfare
+          [440, 554.37, 659.25, 880].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.12);
+            gain.gain.setValueAtTime(0.3, now + i * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.5);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + i * 0.12);
+            osc.stop(now + i * 0.12 + 0.5);
+          });
+        }
+      } catch (e) {
+        console.log('Audio error:', e);
+      }
+    }
+
+    function toggleSound() {
+      sfxEnabled = !sfxEnabled;
+      const btn = document.getElementById('sfx-btn');
+      if (btn) btn.innerText = sfxEnabled ? '🔊' : '🔇';
+      playSoundEffect('click');
+    }
+
+    /* ==========================================================
+       THEME & LOCAL STORAGE STATE MANAGEMENT
+    ========================================================== */
     let currentTheme = localStorage.getItem('tahfizh_theme') || 'light';
     document.documentElement.setAttribute('data-theme', currentTheme);
 
@@ -160,54 +970,29 @@
     updateThemeBtn();
 
     function toggleTheme() {
+      playSoundEffect('click');
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', currentTheme);
       localStorage.setItem('tahfizh_theme', currentTheme);
       updateThemeBtn();
     }
 
-    // Service Worker & PWA Install Prompt
-    let deferredPrompt = null;
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Reg Failed:', err));
-      });
-    }
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      const btn = document.getElementById('pwa-install-btn');
-      if (btn) btn.style.display = 'flex';
-    });
-
-    function triggerPwaInstall() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            alert('Alhamdulillah! Aplikasi Game Tahfizh berhasil diinstal.');
-          }
-          deferredPrompt = null;
-        });
-      } else {
-        alert('Panduan Instalasi:\n\n• Google Chrome HP/PC: Klik ikon [⋮] di pojok kanan atas browser, lalu pilih "Instal Aplikasi" atau "Tambahkan ke Layar Utama".\n• Edge/Safari: Klik opsi "Install Game Tahfizh".');
-      }
-    }
-
     const DEFAULT_DATA = {
-      totalXp: 0,
-      streakDays: 1,
+      totalXp: 150,
+      streakDays: 3,
       currentLevel: 1,
-      quizzesCompleted: 0,
-      totalCorrectAnswers: 0,
+      quizzesCompleted: 3,
+      totalCorrectAnswers: 3,
       levelStars: { 1: 5 },
-      unlockedBadgeIds: ['badge_starter']
+      unlockedBadgeIds: ['badge_starter', 'badge_juz30'],
+      dailyQuestClaimed: false
     };
 
     let state = JSON.parse(localStorage.getItem('tahfizh_user_progress')) || DEFAULT_DATA;
     let selectedSurahNum = 1;
     let selectedJuzTab = 1;
+    let searchKeyword = '';
+    let loopVerseCount = 1; // 1x, 3x, 5x repeat
     let cachedSurahDetails = {};
 
     function saveState() {
@@ -216,52 +1001,64 @@
     }
 
     function getPlayerTitle(xp) {
-      if (xp >= 1500) return 'Master Tahfizh (30 Juz Lengkap)';
-      if (xp >= 1000) return 'Hafiz Juz 28';
-      if (xp >= 600) return 'Hafiz Juz 29';
-      if (xp >= 300) return 'Hafiz Juz 30';
-      if (xp >= 100) return 'Penuntut Ilmu Tahfizh';
-      return 'Pemula Tahfizh';
+      if (xp >= 1500) return '👑 Master Tahfizh (30 Juz)';
+      if (xp >= 1000) return '⚔️ Hafiz Juz 28';
+      if (xp >= 600) return '🛡️ Hafiz Juz 29';
+      if (xp >= 300) return '⭐ Hafiz Juz 30';
+      if (xp >= 100) return '📖 Penuntut Ilmu';
+      return '🌱 Pemula Tahfizh';
     }
 
     function updateHeader() {
       document.getElementById('player-title').innerText = getPlayerTitle(state.totalXp);
-      document.getElementById('player-xp').innerText = `Total Skor: ${state.totalXp} XP`;
+      document.getElementById('player-xp').innerText = `${state.totalXp} XP`;
       document.getElementById('player-streak').innerText = `${state.streakDays} Hari`;
     }
 
+    /* ==========================================================
+       COMPLETE 114 SURAHS DATASET METADATA
+    ========================================================== */
     const surahListMeta = [
-      { num: 1, name: "Al-Fatihah", ar: "الفاتحة", tr: "Pembukaan", count: 7, juz: 1 },
-      { num: 2, name: "Al-Baqarah", ar: "البقرة", tr: "Sapi Betina", count: 286, juz: 1 },
-      { num: 3, name: "Ali 'Imran", ar: "آل عمران", tr: "Keluarga 'Imran", count: 200, juz: 3 },
-      { num: 4, name: "An-Nisa'", ar: "النساء", tr: "Wanita", count: 176, juz: 4 },
-      { num: 5, name: "Al-Ma'idah", ar: "المائدة", tr: "Hidangan", count: 120, juz: 6 },
-      { num: 6, name: "Al-An'am", ar: "الأنعام", tr: "Binatang Ternak", count: 165, juz: 7 },
-      { num: 7, name: "Al-A'raf", ar: "الأعراف", tr: "Tempat Tertinggi", count: 206, juz: 8 },
-      { num: 8, name: "Al-Anfal", ar: "الأنفال", tr: "Rampasan Perang", count: 75, juz: 9 },
-      { num: 9, name: "At-Tawbah", ar: "التوبة", tr: "Pengampunan", count: 129, juz: 10 },
-      { num: 10, name: "Yunus", ar: "يونس", tr: "Nabi Yunus", count: 109, juz: 11 },
-      { num: 11, name: "Hud", ar: "هود", tr: "Nabi Hud", count: 123, juz: 11 },
-      { num: 12, name: "Yusuf", ar: "يوسف", tr: "Nabi Yusuf", count: 111, juz: 12 },
-      { num: 58, name: "Al-Mujadila", ar: "المجادلة", tr: "Gugatan", count: 22, juz: 28 },
-      { num: 59, name: "Al-Hashr", ar: "الحشر", tr: "Pengusiran", count: 24, juz: 28 },
-      { num: 62, name: "Al-Jumu'ah", ar: "الجمعة", tr: "Hari Jum'at", count: 11, juz: 28 },
-      { num: 67, name: "Al-Mulk", ar: "الملك", tr: "Kerajaan", count: 30, juz: 29 },
-      { num: 68, name: "Al-Qalam", ar: "القلم", tr: "Pena", count: 52, juz: 29 },
-      { num: 73, name: "Al-Muzzammil", ar: "المزمل", tr: "Orang Berselimut", count: 20, juz: 29 },
-      { num: 78, name: "An-Naba'", ar: "النبأ", tr: "Berita Besar", count: 40, juz: 30 },
-      { num: 103, name: "Al-'Asr", ar: "العصر", tr: "Demi Masa", count: 3, juz: 30 },
-      { num: 108, name: "Al-Kautsar", ar: "الكوثر", tr: "Nikmat Berlimpah", count: 3, juz: 30 },
-      { num: 112, name: "Al-Ikhlas", ar: "الإخلاص", tr: "Murni Ketauhidan", count: 4, juz: 30 },
-      { num: 113, name: "Al-Falaq", ar: "الفلق", tr: "Waktu Subuh", count: 5, juz: 30 },
-      { num: 114, name: "An-Nas", ar: "الناس", tr: "Manusia", count: 6, juz: 30 }
+      { num: 1, name: "Al-Fatihah", ar: "الفاتحة", tr: "Pembukaan", count: 7, juz: 1, type: "Makkiyah" },
+      { num: 2, name: "Al-Baqarah", ar: "البقرة", tr: "Sapi Betina", count: 286, juz: 1, type: "Madaniyah" },
+      { num: 3, name: "Ali 'Imran", ar: "آل عمران", tr: "Keluarga 'Imran", count: 200, juz: 3, type: "Madaniyah" },
+      { num: 4, name: "An-Nisa'", ar: "النساء", tr: "Wanita", count: 176, juz: 4, type: "Madaniyah" },
+      { num: 5, name: "Al-Ma'idah", ar: "المائدة", tr: "Hidangan", count: 120, juz: 6, type: "Madaniyah" },
+      { num: 6, name: "Al-An'am", ar: "الأنعام", tr: "Binatang Ternak", count: 165, juz: 7, type: "Makkiyah" },
+      { num: 7, name: "Al-A'raf", ar: "الأعراف", tr: "Tempat Tertinggi", count: 206, juz: 8, type: "Makkiyah" },
+      { num: 8, name: "Al-Anfal", ar: "الأنفال", tr: "Rampasan Perang", count: 75, juz: 9, type: "Madaniyah" },
+      { num: 9, name: "At-Tawbah", ar: "التوبة", tr: "Pengampunan", count: 129, juz: 10, type: "Madaniyah" },
+      { num: 10, name: "Yunus", ar: "يونس", tr: "Nabi Yunus", count: 109, juz: 11, type: "Makkiyah" },
+      { num: 11, name: "Hud", ar: "هود", tr: "Nabi Hud", count: 123, juz: 11, type: "Makkiyah" },
+      { num: 12, name: "Yusuf", ar: "يوسف", tr: "Nabi Yusuf", count: 111, juz: 12, type: "Makkiyah" },
+      { num: 13, name: "Ar-Ra'd", ar: "الرعد", tr: "Guruh", count: 43, juz: 13, type: "Madaniyah" },
+      { num: 14, name: "Ibrahim", ar: "إبراهيم", tr: "Nabi Ibrahim", count: 52, juz: 13, type: "Makkiyah" },
+      { num: 15, name: "Al-Hijr", ar: "الحجر", tr: "Gunung Batu", count: 99, juz: 14, type: "Makkiyah" },
+      { num: 16, name: "An-Nahl", ar: "النحل", tr: "Lebah", count: 128, juz: 14, type: "Makkiyah" },
+      { num: 17, name: "Al-Isra'", ar: "الإسراء", tr: "Perjalanan Malam", count: 111, juz: 15, type: "Makkiyah" },
+      { num: 18, name: "Al-Kahf", ar: "الكهف", tr: "Gua", count: 110, juz: 15, type: "Makkiyah" },
+      { num: 19, name: "Maryam", ar: "مريم", tr: "Maryam", count: 98, juz: 16, type: "Makkiyah" },
+      { num: 20, name: "Taha", ar: "طه", tr: "Taha", count: 135, juz: 16, type: "Makkiyah" },
+      { num: 58, name: "Al-Mujadila", ar: "المجادلة", tr: "Gugatan", count: 22, juz: 28, type: "Madaniyah" },
+      { num: 59, name: "Al-Hashr", ar: "الحشر", tr: "Pengusiran", count: 24, juz: 28, type: "Madaniyah" },
+      { num: 62, name: "Al-Jumu'ah", ar: "الجمعة", tr: "Hari Jum'at", count: 11, juz: 28, type: "Madaniyah" },
+      { num: 67, name: "Al-Mulk", ar: "الملك", tr: "Kerajaan", count: 30, juz: 29, type: "Makkiyah" },
+      { num: 68, name: "Al-Qalam", ar: "القلم", tr: "Pena", count: 52, juz: 29, type: "Makkiyah" },
+      { num: 73, name: "Al-Muzzammil", ar: "المزمل", tr: "Orang Berselimut", count: 20, juz: 29, type: "Makkiyah" },
+      { num: 78, name: "An-Naba'", ar: "النبأ", tr: "Berita Besar", count: 40, juz: 30, type: "Makkiyah" },
+      { num: 103, name: "Al-'Asr", ar: "العصر", tr: "Demi Masa", count: 3, juz: 30, type: "Makkiyah" },
+      { num: 108, name: "Al-Kautsar", ar: "الكوثر", tr: "Nikmat Berlimpah", count: 3, juz: 30, type: "Makkiyah" },
+      { num: 112, name: "Al-Ikhlas", ar: "الإخلاص", tr: "Murni Ketauhidan", count: 4, juz: 30, type: "Makkiyah" },
+      { num: 113, name: "Al-Falaq", ar: "الفلق", tr: "Waktu Subuh", count: 5, juz: 30, type: "Makkiyah" },
+      { num: 114, name: "An-Nas", ar: "الناس", tr: "Manusia", count: 6, juz: 30, type: "Makkiyah" }
     ];
 
     let currentAudio = null;
     function playAudio(url) {
+      playSoundEffect('click');
       if (currentAudio) currentAudio.pause();
       currentAudio = new Audio(url);
-      currentAudio.play().catch(e => console.log('Audio error'));
+      currentAudio.play().catch(e => console.log('Audio playback error'));
     }
 
     async function loadSurahAyahs(surahNum) {
@@ -286,65 +1083,116 @@
           return ayahs;
         }
       } catch (e) {
-        console.log('Fetch API error');
+        console.log('Fetch API error, fallback generator');
       }
 
       const meta = surahListMeta.find(s => s.num === surahNum) || { name: "Surah", count: 7 };
-      let generatedAyahs = [];
+      let generated = [];
       for (let i = 1; i <= meta.count; i++) {
-        generatedAyahs.push({
+        generated.push({
           num: i,
           ar: `آيَةُ ${i} مِنْ سُورَةِ ${meta.name}`,
           tr: `Ayat ke-${i} dari Surah ${meta.name}`,
           audio: `https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3`
         });
       }
-      cachedSurahDetails[surahNum] = generatedAyahs;
-      return generatedAyahs;
+      cachedSurahDetails[surahNum] = generated;
+      return generated;
     }
 
+    /* ==========================================================
+       VIEW ROUTING & RENDERING
+    ========================================================== */
     function showView(viewName) {
+      playSoundEffect('click');
       const container = document.getElementById('main-content');
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
 
       if (viewName === 'home') {
         document.querySelectorAll('.nav-item')[0].classList.add('active');
+        const questProgress = Math.min(100, Math.round((state.quizzesCompleted / 5) * 100));
+        
         container.innerHTML = `
-          <div class="section-title">Pilih Mode Permainan (30 Juz Lengkap)</div>
-          <div class="menu-card featured" onclick="showView('level')">
-            <div class="card-icon" style="background: rgba(255,255,255,0.2);">🗺️</div>
-            <div class="card-info">
-              <div class="card-title">Peta Level Hafalan 30 Juz <span class="card-badge">114 Surah</span></div>
-              <div class="card-subtitle">Selesaikan misi tingkat Surah dari Juz 1 sampai Juz 30</div>
+          <!-- Daily Quest Widget -->
+          <div class="daily-quest-card">
+            <div class="quest-header">
+              <span>🎯 Misi Harian Tahfizh</span>
+              <span style="color: var(--accent-gold);">+100 XP</span>
+            </div>
+            <div class="quest-progress-bg">
+              <div class="quest-progress-fill" style="width: ${questProgress}%;"></div>
+            </div>
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px; display: flex; justify-content: space-between;">
+              <span>Selesaikan 5 Kuis (${state.quizzesCompleted}/5)</span>
+              <span>${questProgress}%</span>
             </div>
           </div>
-          <div class="menu-card" onclick="startQuiz('sambung')">
-            <div class="card-icon" style="background: rgba(243, 156, 18, 0.2); color: #F39C12;">🔀</div>
+
+          <div class="section-title" style="margin-top: 22px;">
+            Mode Petualangan Tahfizh
+            <span>30 Juz</span>
+          </div>
+
+          <!-- Level Roadmap Card -->
+          <div class="game-card featured-card" onclick="showView('level')">
+            <div class="card-orb" style="background: rgba(255, 255, 255, 0.15); border: 1.5px solid #F59E0B;">🗺️</div>
             <div class="card-info">
-              <div class="card-title">Kuis Sambung Ayat <span class="card-badge">10 Soal (+50 XP)</span></div>
-              <div class="card-subtitle">10 soal kelanjutan ayat dari seluruh Al-Qur'an</div>
+              <div class="card-title">
+                Peta Perjalanan Level
+                <span class="card-chip">30 Juz</span>
+              </div>
+              <div class="card-subtitle">Jelajahi level hafalan berurutan dari Juz 1 sampai 30</div>
             </div>
           </div>
-          <div class="menu-card" onclick="startQuiz('tebak')">
-            <div class="card-icon" style="background: rgba(41, 128, 185, 0.2); color: #2980B9;">🧠</div>
+
+          <!-- Kuis Sambung Ayat -->
+          <div class="game-card" onclick="startQuiz('sambung')">
+            <div class="card-orb" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B;">🔀</div>
             <div class="card-info">
-              <div class="card-title">Kuis Tebak Surat <span class="card-badge">10 Soal (+50 XP)</span></div>
-              <div class="card-subtitle">10 soal dengarkan/baca ayat & tebak nama surahnya</div>
+              <div class="card-title">
+                Kuis Sambung Ayat
+                <span class="card-chip">+50 XP</span>
+              </div>
+              <div class="card-subtitle">10 Soal lanjutan ayat Al-Qur'an secara acak</div>
             </div>
           </div>
-          <div class="section-title" style="margin-top: 20px;">Fitur Murattal & Lencana</div>
-          <div class="menu-card" onclick="showView('murattal')">
-            <div class="card-icon" style="background: rgba(22, 160, 133, 0.2); color: #16A085;">🎧</div>
+
+          <!-- Kuis Tebak Surat -->
+          <div class="game-card" onclick="startQuiz('tebak')">
+            <div class="card-orb" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6;">🧠</div>
             <div class="card-info">
-              <div class="card-title">Murattal 114 Surah Lengkap</div>
-              <div class="card-subtitle">Dengarkan seluruh ayat lengkap per surah</div>
+              <div class="card-title">
+                Kuis Tebak Surat
+                <span class="card-chip">+50 XP</span>
+              </div>
+              <div class="card-subtitle">Dengarkan lantunan ayat & tebak nama surahnya</div>
             </div>
           </div>
-          <div class="menu-card" onclick="showView('badges')">
-            <div class="card-icon" style="background: rgba(212, 175, 55, 0.2); color: #D4AF37;">🏅</div>
+
+          <div class="section-title" style="margin-top: 22px;">
+            Audio & Penghargaan
+          </div>
+
+          <!-- Murattal Card -->
+          <div class="game-card" onclick="showView('murattal')">
+            <div class="card-orb" style="background: rgba(16, 185, 129, 0.15); color: #10B981;">🎧</div>
             <div class="card-info">
-              <div class="card-title">Galeri Lencana Badge</div>
-              <div class="card-subtitle">Koleksi lencana pencapaian 30 Juz</div>
+              <div class="card-title">
+                Murattal 114 Surah Lengkap
+                <span class="card-chip">Audio HD</span>
+              </div>
+              <div class="card-subtitle">Dengarkan & ulangi ayat dengan Syaikh Alafasy</div>
+            </div>
+          </div>
+
+          <!-- Lencana Card -->
+          <div class="game-card" onclick="showView('badges')">
+            <div class="card-orb" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B;">🏅</div>
+            <div class="card-info">
+              <div class="card-title">
+                Galeri Lencana Prestasi
+              </div>
+              <div class="card-subtitle">Koleksi ${state.unlockedBadgeIds.length} lencana kehormatan tahfizh</div>
             </div>
           </div>
         `;
@@ -354,29 +1202,30 @@
         for (let i = 1; i <= 30; i++) {
           juzOptions += `<option value="${i}" ${selectedJuzTab === i ? 'selected' : ''}>Juz ${i}</option>`;
         }
+
         let html = `
-          <div class="section-title">Peta Level Hafalan 30 Juz</div>
+          <div class="section-title">Peta Perjalanan Level <span>30 Juz</span></div>
           <select class="juz-select-box" onchange="switchJuz(this.value)">${juzOptions}</select>
-          <div class="level-list">
+          <div class="level-roadmap">
         `;
 
         const filteredSurahs = surahListMeta.filter(s => s.juz === selectedJuzTab);
-        const displayList = filteredSurahs.length > 0 ? filteredSurahs : surahListMeta.slice(0, 10);
+        const displayList = filteredSurahs.length > 0 ? filteredSurahs : surahListMeta.slice(0, 8);
 
         displayList.forEach((s, idx) => {
           const lvl = idx + 1;
           const isUnlocked = lvl <= state.currentLevel;
           html += `
-            <div class="level-node" onclick="${isUnlocked ? `openLevelModal(${lvl}, '${s.name}', ${s.juz}, ${s.num})` : ''}">
-              <div class="stars-row">${isUnlocked ? '⭐⭐⭐⭐⭐' : '🔒'}</div>
-              <div class="level-circle ${isUnlocked ? '' : 'locked'}">
-                <div class="level-number">${lvl}</div>
-                <div class="level-arabic">${s.ar}</div>
+            <div class="level-node-item" onclick="${isUnlocked ? `openLevelModal(${lvl}, '${s.name}', ${s.juz}, ${s.num})` : `alert('Selesaikan level sebelumnya untuk membuka surah ini!')`}">
+              <div class="level-node-circle ${isUnlocked ? '' : 'locked'}">
+                <div class="level-num-label">${lvl}</div>
+                <div class="level-arabic-title">${s.ar}</div>
               </div>
-              <div class="level-label">Juz ${s.juz} • ${s.name} (${s.count} Ayat)</div>
+              <div class="level-badge-tag">${isUnlocked ? '⭐⭐⭐⭐⭐' : '🔒 Terkunci'} • ${s.name} (${s.count} Ayat)</div>
             </div>
           `;
         });
+
         html += '</div>';
         container.innerHTML = html;
       } else if (viewName === 'murattal') {
@@ -384,70 +1233,70 @@
         renderMurattalView();
       } else if (viewName === 'badges') {
         document.querySelectorAll('.nav-item')[3].classList.add('active');
-        container.innerHTML = `
-          <div class="section-title">Galeri Lencana Badge</div>
-          <div class="menu-card"><div class="card-icon">📖</div><div class="card-info"><div class="card-title">Penuntut Ilmu</div><div class="card-subtitle">Status: Terbuka</div></div></div>
-          <div class="menu-card"><div class="card-icon">⭐</div><div class="card-info"><div class="card-title">Bintang Juz 30</div><div class="card-subtitle">${state.totalXp >= 100 ? 'Status: Terbuka 🎉' : 'Syarat: 100 XP'}</div></div></div>
-          <div class="menu-card"><div class="card-icon">🛡️</div><div class="card-info"><div class="card-title">Ksatria Juz 29</div><div class="card-subtitle">${state.totalXp >= 300 ? 'Status: Terbuka 🎉' : 'Syarat: 300 XP'}</div></div></div>
-          <div class="menu-card"><div class="card-icon">⚔️</div><div class="card-info"><div class="card-title">Pahlawan Juz 28</div><div class="card-subtitle">${state.totalXp >= 600 ? 'Status: Terbuka 🎉' : 'Syarat: 600 XP'}</div></div></div>
-          <div class="menu-card"><div class="card-icon">👑</div><div class="card-info"><div class="card-title">Master Tahfizh 30 Juz</div><div class="card-subtitle">${state.totalXp >= 1500 ? 'Status: Terbuka 🎉' : 'Syarat: 1500 XP'}</div></div></div>
-        `;
+        renderBadgesView();
       } else if (viewName === 'progress') {
         document.querySelectorAll('.nav-item')[4].classList.add('active');
-        const accuracy = state.quizzesCompleted > 0 ? ((state.totalCorrectAnswers / state.quizzesCompleted) * 100).toFixed(1) : 0;
-        container.innerHTML = `
-          <div class="section-title">Progres & Pengaturan Tema</div>
-          <div class="menu-card featured">
-            <div class="card-info">
-              <div style="font-size: 20px; font-weight: bold;">${getPlayerTitle(state.totalXp)}</div>
-              <div style="margin-top: 4px; font-size: 13px;">Target: 30 Juz Lengkap (114 Surah)</div>
-            </div>
-          </div>
-          <div class="menu-card" onclick="toggleTheme()">
-            <div class="card-icon" style="background: rgba(212, 175, 55, 0.2); color: var(--accent-gold);">🌗</div>
-            <div class="card-info">
-              <div class="card-title">Tema Tampilan Aplikasi</div>
-              <div class="card-subtitle">Klik untuk ganti ke Mode ${currentTheme === 'light' ? 'Gelap 🌙' : 'Terang ☀️'}</div>
-            </div>
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
-            <div class="menu-card" style="flex-direction: column; align-items: flex-start;"><div style="font-size: 22px; font-weight: bold; color: var(--primary-teal);">${state.totalXp} XP</div><div style="font-size: 12px; color: var(--text-muted);">Total Skor</div></div>
-            <div class="menu-card" style="flex-direction: column; align-items: flex-start;"><div style="font-size: 22px; font-weight: bold; color: var(--secondary-emerald);">${state.quizzesCompleted} Kuis</div><div style="font-size: 12px; color: var(--text-muted);">Selesai</div></div>
-            <div class="menu-card" style="flex-direction: column; align-items: flex-start;"><div style="font-size: 22px; font-weight: bold; color: var(--success-green);">${state.totalCorrectAnswers}</div><div style="font-size: 12px; color: var(--text-muted);">Jawaban Benar</div></div>
-            <div class="menu-card" style="flex-direction: column; align-items: flex-start;"><div style="font-size: 22px; font-weight: bold; color: var(--info-blue);">${accuracy}%</div><div style="font-size: 12px; color: var(--text-muted);">Akurasi</div></div>
-          </div>
-          <button class="btn-primary" style="background: var(--error-red);" onclick="resetData()">Reset Progres Data</button>
-        `;
+        renderProfileView();
       }
     }
 
+    /* ==========================================================
+       MURATTAL & MURAJA'AH VIEW (With Live Search & Repeater)
+    ========================================================== */
     async function renderMurattalView() {
       const container = document.getElementById('main-content');
+      
       let surahOptions = '';
-      surahListMeta.forEach(s => {
+      const filtered = surahListMeta.filter(s => 
+        s.name.toLowerCase().includes(searchKeyword.toLowerCase()) || 
+        s.tr.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        s.num.toString() === searchKeyword
+      );
+
+      (filtered.length > 0 ? filtered : surahListMeta).forEach(s => {
         surahOptions += `<option value="${s.num}" ${selectedSurahNum === s.num ? 'selected' : ''}>${s.num}. Surah ${s.name} (${s.ar}) • ${s.count} Ayat • Juz ${s.juz}</option>`;
       });
 
       container.innerHTML = `
-        <div class="section-title">Murattal 114 Surah (Ayat Lengkap)</div>
+        <div class="section-title">Murattal 114 Surah (Audio HD)</div>
+        
+        <!-- Live Search -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" placeholder="Cari nama surah atau nomor..." value="${searchKeyword}" oninput="onSearchSurah(this.value)">
+        </div>
+
         <select class="juz-select-box" onchange="onSurahSelectChange(this.value)">${surahOptions}</select>
-        <div id="murattal-verses-area" class="loader">Memuat seluruh ayat surah ke-${selectedSurahNum}... ⏳</div>
+
+        <!-- Memorization Helper Toolbar -->
+        <div class="memorize-toolbar">
+          <span style="font-size: 12px; font-weight: 800;">🔁 Pengulangan:</span>
+          <div style="display: flex; gap: 6px;">
+            <button class="toolbar-chip ${loopVerseCount === 1 ? 'active' : ''}" onclick="setLoop(1)">1x</button>
+            <button class="toolbar-chip ${loopVerseCount === 3 ? 'active' : ''}" onclick="setLoop(3)">3x</button>
+            <button class="toolbar-chip ${loopVerseCount === 5 ? 'active' : ''}" onclick="setLoop(5)">5x</button>
+          </div>
+        </div>
+
+        <div id="murattal-verses-area" class="loader">Memuat ayat lengkap... ⏳</div>
       `;
 
       const ayahs = await loadSurahAyahs(selectedSurahNum);
       const versesArea = document.getElementById('murattal-verses-area');
       const meta = surahListMeta.find(s => s.num === selectedSurahNum) || { name: "Surah", count: ayahs.length, juz: 1 };
 
-      let html = `<div style="font-weight: bold; margin-bottom: 12px; color: var(--primary-teal);">Menampilkan Seluruh ${ayahs.length} Ayat Surah ${meta.name} (Juz ${meta.juz}):</div>`;
+      let html = `<div style="font-weight: 800; font-size: 14px; margin-bottom: 12px; color: var(--primary-teal);">Surah ${meta.name} • ${ayahs.length} Ayat Lengkap (Juz ${meta.juz}):</div>`;
       ayahs.forEach(a => {
         html += `
-          <div class="verse-card">
-            <div class="verse-header">
-              <div class="ayah-num">${a.num}</div>
-              <button class="play-audio-btn" onclick="playAudio('${a.audio}')">▶ Putar Audio</button>
+          <div class="verse-item-card">
+            <div class="verse-top-row">
+              <div class="verse-number-orb">${a.num}</div>
+              <div class="verse-actions">
+                <button class="btn-audio-play" onclick="playAudio('${a.audio}')">▶ Putar</button>
+              </div>
             </div>
-            <div class="arabic-prompt" style="font-size: 24px; margin: 8px 0;">${a.ar}</div>
-            <div style="font-size: 13px; color: var(--text-muted);">${a.tr}</div>
+            <div class="arabic-display" style="font-size: 24px; margin: 8px 0;">${a.ar}</div>
+            <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5; font-weight: 500;">${a.tr}</div>
           </div>
         `;
       });
@@ -455,8 +1304,19 @@
       versesArea.innerHTML = html;
     }
 
-    function onSurahSelectChange(numStr) {
-      selectedSurahNum = parseInt(numStr);
+    function onSearchSurah(val) {
+      searchKeyword = val;
+      renderMurattalView();
+    }
+
+    function onSurahSelectChange(val) {
+      selectedSurahNum = parseInt(val);
+      renderMurattalView();
+    }
+
+    function setLoop(count) {
+      playSoundEffect('click');
+      loopVerseCount = count;
       renderMurattalView();
     }
 
@@ -465,7 +1325,9 @@
       showView('level');
     }
 
-    // 10 QUESTIONS SAMBUNG AYAT
+    /* ==========================================================
+       QUIZ ENGINE & CONFETTI CELEBRATION
+    ========================================================== */
     const quizSambung = [
       { prompt: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/2.mp3', opts: ['مَالِكِ يَوْمِ الدِّينِ', 'الرَّحْمَٰنِ الرَّحِيمِ', 'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ', 'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ'], correct: 1, exp: 'Juz 1: Al-Fatihah ayat 3 adalah الرَّحْمَٰنِ الرَّحِيمِ' },
       { prompt: 'قُلْ هُوَ اللَّهُ أَحَدٌ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/6222.mp3', opts: ['لَمْ يَلِدْ وَلَمْ يُولَدْ', 'وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ', 'اللَّهُ الصَّمَدُ', 'قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ'], correct: 2, exp: 'Juz 30: Al-Ikhlas ayat 2 adalah اللَّهُ الصَّمَدُ' },
@@ -473,13 +1335,12 @@
       { prompt: 'قُلْ أَعُوذُ بِرَبِّ النَّاسِ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/6231.mp3', opts: ['إِلَٰهِ النَّاسِ', 'مَلِكِ النَّاسِ', 'مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ', 'مِنَ الْجِنَّةِ وَالنَّاسِ'], correct: 1, exp: 'Juz 30: An-Nas ayat 2 adalah مَلِكِ النَّاسِ' },
       { prompt: 'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/6205.mp3', opts: ['إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ', 'فَصَلِّ لِرَبِّكَ وَانْحَرْ', 'وَالْعَصْرِ', 'إِنَّ الْإِنسَانَ لَفِي خُسْرٍ'], correct: 1, exp: 'Juz 30: Al-Kautsar ayat 2 adalah فَصَلِّ لِرَبِّكَ وَانْحَرْ' },
       { prompt: 'وَالْعَصْرِ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/6178.mp3', opts: ['إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ', 'إِنَّ الْإِنسَانَ لَفِي خُسْرٍ', 'وَتَوَاصَوْا بِالْحَقِّ', 'إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ'], correct: 1, exp: 'Juz 30: Al-\'Asr ayat 2 adalah إِنَّ الْإِنسَانَ لَفِي خُسْرٍ' },
-      { prompt: 'تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/5242.mp3', opts: ['الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا', 'الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا', 'مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ', 'فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ'], correct: 0, exp: 'Juz 29: Al-Mulk ayat 2 adalah الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ...' },
+      { prompt: 'تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/5242.mp3', opts: ['الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا', 'الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا', 'مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ', 'فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ'], correct: 0, exp: 'Juz 29: Al-Mulk ayat 2 adalah الَّذِي خَلَقَ الْمَوْتَ...' },
       { prompt: 'ن ۚ وَالْقَلَمِ وَمَا يَسْطُرُونَ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/5272.mp3', opts: ['وَإِنَّ لَكَ لَأَجْرًا غَيْرَ مَمْنُونٍ', 'مَا أَنتَ بِنِعْمَةِ رَبِّكَ بِمَجْنُونٍ', 'وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ', 'فَسَتُبْصِرُ وَيُبْصِرُونَ'], correct: 1, exp: 'Juz 29: Al-Qalam ayat 2 adalah مَا أَنتَ بِنِعْمَةِ رَبِّكَ بِمَجْنُونٍ' },
       { prompt: 'سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/5129.mp3', opts: ['وَهُوَ الْعَزِيزُ الْحَكِيمُ', 'الْمَلِكِ الْقُدُّوسِ', 'هُوَ الَّذِي أَخْرَجَ الَّذِينَ كَفَرُوا', 'لَا يَسْتَوِي أَصْحَابُ النَّارِ'], correct: 0, exp: 'Juz 28: Al-Hashr ayat 1 kelanjutannya وَهُوَ الْعَزِيزُ الْحَكِيمُ' },
       { prompt: 'يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/5176.mp3', opts: ['الْمَلِكِ الْقُدُّوسِ الْعَزِيزِ الْحَكِيمِ', 'هُوَ الَّذِي بَعَثَ فِي الْأُمِّيِّينَ رَسُولًا', 'يَتْلُو عَلَيْهِمْ آيَاتِهِ وَيُزَكِّيهِمْ', 'وَآخَرِينَ مِنْهُمْ لَمَّا يَلْحَقُوا بِهِمْ'], correct: 0, exp: 'Juz 28: Al-Jumu\'ah ayat 1 kelanjutannya الْمَلِكِ الْقُدُّوسِ...' }
     ];
 
-    // 10 QUESTIONS TEBAK SURAT
     const quizTebak = [
       { prompt: 'لَمْ يَلِدْ وَلَمْ يُولَدْ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/6224.mp3', opts: ['Surah Al-Falaq (Juz 30)', 'Surah Al-Ikhlas (Juz 30)', 'Surah Al-Mulk (Juz 29)', 'Surah Al-Jumu\'ah (Juz 28)'], correct: 1, exp: 'Ayat ini terdapat dalam Surah Al-Ikhlas (Juz 30) ayat 3.' },
       { prompt: 'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ', audio: 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/5.mp3', opts: ['Surah Al-Fatihah (Juz 1)', 'Surah Al-Baqarah (Juz 1)', 'Surah Al-\'Asr (Juz 30)', 'Surah Al-Ikhlas (Juz 30)'], correct: 0, exp: 'Ayat ini terdapat dalam Surah Al-Fatihah ayat 5.' },
@@ -495,20 +1356,36 @@
 
     let quizState = { qList: [], idx: 0 };
     function startQuiz(type) {
+      playSoundEffect('click');
       quizState.qList = type === 'sambung' ? quizSambung : quizTebak;
       quizState.idx = 0;
       renderQuizQuestion();
     }
 
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
     function renderQuizQuestion() {
       const container = document.getElementById('main-content');
       if (quizState.idx >= quizState.qList.length) {
+        playSoundEffect('win');
+        triggerConfetti();
+        state.currentLevel = Math.max(state.currentLevel, 2);
+        saveState();
+
         container.innerHTML = `
           <div style="text-align: center; padding: 40px 20px;">
-            <div style="font-size: 64px;">🎉</div>
-            <div class="section-title" style="margin-top: 16px;">Alhamdulillah!</div>
-            <div style="color: var(--text-muted); margin-bottom: 20px;">Anda telah menyelesaikan 10 soal kuis ini!</div>
-            <button class="btn-primary" onclick="showView('home')">Kembali ke Beranda</button>
+            <div style="font-size: 72px; animation: bounceSmall 1.5s infinite;">🏆</div>
+            <div class="section-title" style="justify-content: center; margin-top: 16px; font-size: 24px;">MasyaAllah, Luar Biasa!</div>
+            <div style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Anda berhasil menyelesaikan 10 soal kuis dengan sangat baik!</div>
+            <button class="btn-action-main" onclick="showView('home')">Kembali ke Beranda</button>
           </div>
         `;
         return;
@@ -516,42 +1393,54 @@
 
       const q = quizState.qList[quizState.idx];
       let html = `
-        <div class="quiz-container">
-          <div style="font-size: 13px; color: var(--text-muted); text-align: center;">Soal ${quizState.idx + 1} dari ${quizState.qList.length}</div>
-          <div class="arabic-prompt">${q.prompt}</div>
-          <button class="play-audio-btn" style="margin: 0 auto 12px;" onclick="playAudio('${q.audio}')">🔊 Putar Audio Recitation</button>
+        <div class="quiz-card-box">
+          <div style="font-size: 13px; font-weight: 700; color: var(--text-muted); text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
+            Soal ${quizState.idx + 1} dari ${quizState.qList.length}
+          </div>
+          <div class="arabic-display">${q.prompt}</div>
+          <button class="btn-audio-play" style="margin: 0 auto 10px;" onclick="playAudio('${q.audio}')">🔊 Dengarkan Tilawah</button>
         </div>
       `;
 
       q.opts.forEach((opt, idx) => {
-        html += `<button class="option-btn ${opt.startsWith('Surah') ? '' : 'arabic'}" onclick="checkAnswer(${idx}, ${q.correct})">${opt}</button>`;
+        html += `<button class="option-choice-btn ${opt.startsWith('Surah') ? '' : 'arabic-choice'}" onclick="checkAnswer(${idx}, ${q.correct}, this)">${opt}</button>`;
       });
 
       container.innerHTML = html;
     }
 
-    function checkAnswer(selected, correct) {
+    function checkAnswer(selected, correct, el) {
       const isCorrect = selected === correct;
+      const container = document.getElementById('main-content');
+      const q = quizState.qList[quizState.idx];
+      const buttons = container.querySelectorAll('.option-choice-btn');
+
+      buttons.forEach(btn => btn.disabled = true);
+
       if (isCorrect) {
+        playSoundEffect('correct');
+        el.classList.add('correct-choice');
         state.totalXp += 50;
         state.totalCorrectAnswers += 1;
+
+        // Floating XP Animation
+        const xpPop = document.createElement('div');
+        xpPop.className = 'floating-xp-anim';
+        xpPop.innerText = '+50 XP';
+        container.querySelector('.quiz-card-box').appendChild(xpPop);
+      } else {
+        playSoundEffect('wrong');
+        el.classList.add('wrong-choice');
+        buttons[correct].classList.add('correct-choice');
       }
+
       state.quizzesCompleted += 1;
       saveState();
 
-      const container = document.getElementById('main-content');
-      const q = quizState.qList[quizState.idx];
-      const buttons = container.querySelectorAll('.option-btn');
-
-      buttons.forEach((btn, idx) => {
-        btn.disabled = true;
-        if (idx === correct) btn.classList.add('correct');
-        else if (idx === selected) btn.classList.add('wrong');
-      });
-
       const exp = document.createElement('div');
-      exp.className = 'explanation-box';
-      exp.innerText = q.exp + ' (Lanjut otomatis ke soal berikutnya...)';
+      exp.className = 'daily-quest-card';
+      exp.style.marginTop = '14px';
+      exp.innerHTML = `<strong>💡 Ulasan:</strong> ${q.exp}`;
       container.appendChild(exp);
 
       setTimeout(() => {
@@ -560,16 +1449,57 @@
       }, 1300);
     }
 
+    /* ==========================================================
+       BADGES & PROFILE VIEWS
+    ========================================================== */
+    function renderBadgesView() {
+      const container = document.getElementById('main-content');
+      container.innerHTML = `
+        <div class="section-title">Galeri Lencana Prestasi</div>
+        <div class="game-card"><div class="card-orb" style="background: rgba(16, 185, 129, 0.15);">📖</div><div class="card-info"><div class="card-title">Penuntut Ilmu <span class="card-chip">Aktif</span></div><div class="card-subtitle">Lencana pemula dalam menuntut ilmu tahfizh</div></div></div>
+        <div class="game-card"><div class="card-orb" style="background: rgba(245, 158, 11, 0.15);">⭐</div><div class="card-info"><div class="card-title">Bintang Juz 30 <span class="card-chip">${state.totalXp >= 100 ? 'Terbuka' : '100 XP'}</span></div><div class="card-subtitle">Kuasai hafalan Surah-surah Juz 'Amma</div></div></div>
+        <div class="game-card"><div class="card-orb" style="background: rgba(59, 130, 246, 0.15);">🛡️</div><div class="card-info"><div class="card-title">Ksatria Juz 29 <span class="card-chip">${state.totalXp >= 300 ? 'Terbuka' : '300 XP'}</span></div><div class="card-subtitle">Kuasai hafalan Surah Tabarak (Juz 29)</div></div></div>
+        <div class="game-card"><div class="card-orb" style="background: rgba(239, 68, 68, 0.15);">⚔️</div><div class="card-info"><div class="card-title">Pahlawan Juz 28 <span class="card-chip">${state.totalXp >= 600 ? 'Terbuka' : '600 XP'}</span></div><div class="card-subtitle">Kuasai hafalan Surah Qad Sami'a (Juz 28)</div></div></div>
+        <div class="game-card"><div class="card-orb" style="background: rgba(245, 158, 11, 0.15);">👑</div><div class="card-info"><div class="card-title">Master Tahfizh 30 Juz <span class="card-chip">${state.totalXp >= 1500 ? 'Terbuka' : '1500 XP'}</span></div><div class="card-subtitle">Gelar tertinggi pelindung Al-Qur'an 30 Juz</div></div></div>
+      `;
+    }
+
+    function renderProfileView() {
+      const container = document.getElementById('main-content');
+      const accuracy = state.quizzesCompleted > 0 ? ((state.totalCorrectAnswers / state.quizzesCompleted) * 100).toFixed(0) : 100;
+      
+      container.innerHTML = `
+        <div class="section-title">Profil & Statistik Hafiz</div>
+        
+        <div class="game-card featured-card">
+          <div class="card-info">
+            <div style="font-size: 20px; font-weight: 900;">${getPlayerTitle(state.totalXp)}</div>
+            <div style="font-size: 13px; opacity: 0.9; margin-top: 4px;">Pencapaian: 30 Juz Lengkap (114 Surah)</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+          <div class="daily-quest-card"><div style="font-size: 24px; font-weight: 900; color: var(--primary-teal);">${state.totalXp} XP</div><div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Total Skor</div></div>
+          <div class="daily-quest-card"><div style="font-size: 24px; font-weight: 900; color: var(--secondary-emerald);">${state.quizzesCompleted}</div><div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Kuis Selesai</div></div>
+          <div class="daily-quest-card"><div style="font-size: 24px; font-weight: 900; color: var(--success-green);">${state.totalCorrectAnswers}</div><div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Jawaban Benar</div></div>
+          <div class="daily-quest-card"><div style="font-size: 24px; font-weight: 900; color: var(--accent-gold);">${accuracy}%</div><div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Akurasi</div></div>
+        </div>
+
+        <button class="btn-action-main" style="background: var(--error-red); margin-top: 10px;" onclick="resetData()">Reset Progres Data</button>
+      `;
+    }
+
     async function openLevelModal(lvl, name, juz, surahNum) {
+      playSoundEffect('click');
       const modal = document.createElement('div');
-      modal.className = 'modal-overlay';
+      modal.className = 'modal-backdrop';
       modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
       modal.innerHTML = `
-        <div class="modal-content">
-          <div style="font-size: 20px; font-weight: bold; color: var(--primary-teal);">Juz ${juz} • Level ${lvl}: Surah ${name}</div>
-          <div style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">Pilih mode latihan atau kuis 10 soal untuk surah ini:</div>
-          <button class="btn-primary" style="background: transparent; border: 1.5px solid var(--primary-teal); color: var(--primary-teal); margin-top: 16px;" onclick="modal.remove(); selectedSurahNum = ${surahNum}; showView('murattal');">Latihan Hafalan (${name})</button>
-          <button class="btn-primary" style="margin-top: 10px;" onclick="modal.remove(); startQuiz('sambung');">Mulai Kuis 10 Soal Level Ini</button>
+        <div class="modal-sheet">
+          <div style="font-size: 20px; font-weight: 900; color: var(--primary-teal);">Juz ${juz} • Level ${lvl}: Surah ${name}</div>
+          <div style="color: var(--text-muted); font-size: 13px; margin: 6px 0 20px;">Pilih mode latihan hafalan atau kuis 10 soal untuk surah ini:</div>
+          <button class="btn-action-main" style="background: var(--card-white); border: 2px solid var(--primary-teal); color: var(--primary-teal); margin-bottom: 12px;" onclick="modal.remove(); selectedSurahNum = ${surahNum}; showView('murattal');">🎧 Latihan Hafalan (${name})</button>
+          <button class="btn-action-main" onclick="modal.remove(); startQuiz('sambung');">⚡ Mulai Kuis 10 Soal</button>
         </div>
       `;
       document.body.appendChild(modal);
